@@ -2,7 +2,7 @@
 import { useContext } from 'react'
 import { CartContext } from '../context/cart'
 // import { FaArrowLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage = ( ) => {
   const navigate = useNavigate();
@@ -19,10 +19,8 @@ const CartPage = ( ) => {
             className="mr-2 text-gray-600 cursor-pointer hover:text-pink-500 transition duration-300 font-bold flex items-center"
             onClick={goBack}
           >
-             Baa
-            <span className="ml-1">Back</span>
+             Back
           </button>
-          <h1 className="text-3xl font-semibold">My Cart</h1>
         </div>
         <h1 className="text-3xl font-semibold mb-4">My Cart</h1>
         {cartItems.length > 0 ? (
@@ -68,12 +66,14 @@ const CartPage = ( ) => {
         ) : (
           <h1 className="text-lg font-semibold mt-4">Your cart is empty</h1>
         )}
+        <Link to={"/product"}>
         <button
           className="block mt-8 w-full px-4 py-2 bg-gray-800 text-white text-sm font-bold rounded-full hover:bg-gray-700 focus:outline-none focus:bg-gray-700"
           // Add functionality or link for continuing shopping
         >
           Continue Shopping
         </button>
+        </Link>
       </div>
     </div>
   );

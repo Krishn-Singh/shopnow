@@ -2,6 +2,7 @@
 import React, { Suspense } from 'react';
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Loader from './components/Loader';
 
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -44,7 +45,7 @@ const appRouter =createBrowserRouter([
 
 function App() {
   return (
-    <Suspense fallback={<div> Loading...</div>}>
+    <Suspense fallback={<div> <Loader /></div>}>
      <RouterProvider router={appRouter}/>
      </Suspense>
   );
