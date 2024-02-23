@@ -7,7 +7,7 @@ export const  ProductProvider= ({ children }) => {
 
   async function getProducts() {
     try {
-      const response = await fetch('https://dummyjson.com/products');
+      const response = await fetch('https://dummyjson.com/products?limit=10');
       const data = await response.json();
       setProductsdata(data.products);
     } catch (eproductsdatarror) {

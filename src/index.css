@@ -1,13 +1,19 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.pagination-button {
+  padding: 8px 12px;
+  margin-right: 5px; /* Adjust the margin between buttons */
+  border: 1px solid #ddd; /* Border color for buttons */
+  background-color: #fff; /* Background color for buttons */
+  color: #333; /* Text color for buttons */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.pagination-button:hover {
+  background-color: #f2f2f2; /* Background color on hover for buttons */
+}
+
+.pagination .active a,
+.pagination .active button {
+  background-color: #3498db; /* Background color for the selected page */
+  color: #fff; /* Text color for the selected page */
 }

@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { CartContext } from '../context/cart';
 import Loader from './Loader';
 import { getProductContext } from '../context/product';
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -13,7 +14,8 @@ const Product = ({item}) => {
   const [loading, setLoading] = useState(true);
   const { cartItems, addToCart , removeFromCart} = useContext(CartContext)
   const { productsdata, getProducts,setProductsdata } = useContext(getProductContext);
-  console.log("2", productsdata)
+  const [currentPage, setCurrentPage] = useState(0);
+  const productsPerPage = 10;
   // console.log("cart", cartItems)
 
   // const toggle = () => {
@@ -27,8 +29,16 @@ const Product = ({item}) => {
   // }
 
   useEffect(() => {
+    if(productsdata){
      setProducts(productsdata)
-  }, [])
+    }
+  }, [productsdata])
+  const indexOfLastProduct = (currentPage + 1) * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const notifyAddedToCart = (item) => toast.success(`${item.title} added to cart!`, {
     position: "top-center",
@@ -95,6 +105,28 @@ const Product = ({item}) => {
         })}
       </div>
       {/* <CartPage showModal={showModal} toggle={toggle} /> */}
+      <div className="p-4">
+        <ReactPaginate
+        nextLabel="next >"
+        onPageChange={({ selected }) => setCurrentPage(selected)}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={Math.ceil(products.length / productsPerPage)}
+        previousLabel="< previous"
+        pageClassName="pagination-button"
+        pageLinkClassName="pagination-button"
+        previousClassName="pagination-button"
+        previousLinkClassName="pagination-button"
+        nextClassName="pagination-button"
+        nextLinkClassName="pagination-button"
+        breakLabel="..."
+        breakClassName="pagination-button"
+        breakLinkClassName="pagination-button"
+        containerClassName={"pagination-container flex justify-center"}
+        activeClassName={"bg-blue-600"}
+        renderOnZeroPageCount={null}
+      />
+      </div>
     </div>
 )
 }
