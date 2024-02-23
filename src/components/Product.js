@@ -3,6 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { CartContext } from '../context/cart';
 import Loader from './Loader';
+import { getProductContext } from '../context/product';
+import ReactPaginate from 'react-paginate';
 
 
 
@@ -11,22 +13,32 @@ const Product = ({item}) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true);
   const { cartItems, addToCart , removeFromCart} = useContext(CartContext)
-  // console.log("2", products)
+  const { productsdata, getProducts,setProductsdata } = useContext(getProductContext);
+  const [currentPage, setCurrentPage] = useState(0);
+  const productsPerPage = 10;
   // console.log("cart", cartItems)
 
   // const toggle = () => {
   //   setshowModal(!showModal);
   // };
 
-  async function getProducts() {
-    const response = await fetch('https://dummyjson.com/products');
-    const data = await response.json()
-    setProducts(data.products)
-  }
+  // async function getProducts() {
+  //   const response = await fetch('https://dummyjson.com/products');
+  //   const data = await response.json()
+  //   setProducts(data.products)
+  // }
 
   useEffect(() => {
-    getProducts()
-  }, [])
+    if(productsdata){
+     setProducts(productsdata)
+    }
+  }, [productsdata])
+  const indexOfLastProduct = (currentPage + 1) * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   const notifyAddedToCart = (item) => toast.success(`${item.title} added to cart!`, {
     position: "top-center",
@@ -93,6 +105,28 @@ const Product = ({item}) => {
         })}
       </div>
       {/* <CartPage showModal={showModal} toggle={toggle} /> */}
+      <div className="p-4">
+        <ReactPaginate
+        nextLabel="next >"
+        onPageChange={({ selected }) => setCurrentPage(selected)}
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        pageCount={Math.ceil(products.length / productsPerPage)}
+        previousLabel="< previous"
+        pageClassName="pagination-button"
+        pageLinkClassName="pagination-button"
+        previousClassName="pagination-button"
+        previousLinkClassName="pagination-button"
+        nextClassName="pagination-button"
+        nextLinkClassName="pagination-button"
+        breakLabel="..."
+        breakClassName="pagination-button"
+        breakLinkClassName="pagination-button"
+        containerClassName={"pagination-container flex justify-center"}
+        activeClassName={"bg-blue-600"}
+        renderOnZeroPageCount={null}
+      />
+      </div>
     </div>
 )
 }
