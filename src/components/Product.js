@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { CartContext } from '../context/cart';
 import Loader from './Loader';
+import { getProductContext } from '../context/product';
 
 
 
@@ -11,21 +12,22 @@ const Product = ({item}) => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true);
   const { cartItems, addToCart , removeFromCart} = useContext(CartContext)
-  // console.log("2", products)
+  const { productsdata, getProducts,setProductsdata } = useContext(getProductContext);
+  console.log("2", productsdata)
   // console.log("cart", cartItems)
 
   // const toggle = () => {
   //   setshowModal(!showModal);
   // };
 
-  async function getProducts() {
-    const response = await fetch('https://dummyjson.com/products');
-    const data = await response.json()
-    setProducts(data.products)
-  }
+  // async function getProducts() {
+  //   const response = await fetch('https://dummyjson.com/products');
+  //   const data = await response.json()
+  //   setProducts(data.products)
+  // }
 
   useEffect(() => {
-    getProducts()
+     setProducts(productsdata)
   }, [])
 
   const notifyAddedToCart = (item) => toast.success(`${item.title} added to cart!`, {
